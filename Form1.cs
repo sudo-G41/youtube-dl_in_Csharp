@@ -17,12 +17,14 @@ namespace youtube
 {
     public partial class Form1 : Form
     {
+        Boolean downloadOk = false;
         public Form1()
         {
             InitializeComponent();
 
             urlTextBox.TextChanged += urlTextBoxTextChanged;
             downloadpathBtn.Click += downloadpathBtnClick;
+            downloadBtn.Click += downloadBtnClick;
             // btn1.Click += btn1Click;
             // btn2.Click += btn2Click;
         }
@@ -48,16 +50,9 @@ namespace youtube
         //         Console.WriteLine(option);
         //     }
         // }
-        // private void thumbnailBtnClick(object sender, EventArgs e){
-        //     String URL = "https://img.youtube.com/vi/1bNNQBDeCtY/0.jpg";
-        //     this.thumbnailPicbox.Image = getImageURL(URL);
-        // }
         private void urlTextBoxTextChanged(object sender, EventArgs e){
             if(urlTextBox.Text.Length>16){
                 String[] strArray = urlTextBox.Text.Split('/');
-                // for(int i=0;i<strArray.Length;i++){
-                //     Console.WriteLine(strArray[i]);
-                // }
                 if(strArray.Length!=4){
                     return;
                 }
@@ -84,11 +79,27 @@ namespace youtube
                 }
                 using(MemoryStream mes = new MemoryStream(img)){
                     Image i = Image.FromStream(mes);
+                    downloadOk=true;
                     return i;
                 }
             }
         }
-        // private void thumbnailPictureBoxImage()
+
+        private void downloadBtnClick(object sender, EventArgs e){
+            if(downloadOk&&downloadpathTextBox.Text.Length>0){
+                String option = "-o \""+downloadpathTextBox.Text+"\\%(title)s.%(ext)s\" "+urlTextBox.Text+" -v";
+                var sample = Process.Start(Application.StartupPath+"/yt-dlp.exe",option);
+                while(!sample.HasExited);
+                downloadOk=false;
+                urlTextBox.Text="";
+            }
+            else if(downloadOk){
+                MessageBox.Show("저장할 위치를 선택해 주세요");
+            }
+            else{
+                MessageBox.Show("Youtube 주소를 입력해 주세요");
+            }
+        }
 
         private void downloadpathBtnClick(object sender, EventArgs e){
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
