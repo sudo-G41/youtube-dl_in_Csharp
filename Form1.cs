@@ -21,6 +21,7 @@ namespace youtube
         {
             InitializeComponent();
 
+            urlTextBox.TextChanged += urlTextBoxTextChanged;
             // btn1.Click += btn1Click;
             // btn2.Click += btn2Click;
         }
@@ -50,16 +51,43 @@ namespace youtube
         //     String URL = "https://img.youtube.com/vi/1bNNQBDeCtY/0.jpg";
         //     this.thumbnailPicbox.Image = getImageURL(URL);
         // }
+        private void urlTextBoxTextChanged(object sender, EventArgs e){
+            if(urlTextBox.Text.Length>16){
+                String[] strArray = urlTextBox.Text.Split('/');
+                // for(int i=0;i<strArray.Length;i++){
+                //     Console.WriteLine(strArray[i]);
+                // }
+                if(strArray.Length!=4){
+                    return;
+                }
+                if(String.Compare(strArray[2],"youtu.be",false)==0||String.Compare(strArray[2],"www.youtube.com",false)==0){
+                    Console.WriteLine(strArray[2]);
+                    strArray=strArray[3].Split('=');
+                    this.thumbnailPictureBox.Image=getImageURL(strArray[strArray.Length-1]);
+                }
+            }
+        }
         private Image getImageURL(String url){
+            url = "https://img.youtube.com/vi/"+url+"/0.jpg";
+            Console.WriteLine(url);
             using(WebClient client = new WebClient()){
                 byte[] img;
-                img = client.DownloadData(url);
+                try
+                {
+                    img = client.DownloadData(url);
+                }
+                catch (System.Exception)
+                {
+                    return null;
+                    throw;
+                }
                 using(MemoryStream mes = new MemoryStream(img)){
                     Image i = Image.FromStream(mes);
                     return i;
                 }
             }
         }
+        // private void thumbnailPictureBoxImage()
 
         private void MousePointXY(object sender, MouseEventArgs e){
             Console.WriteLine("Sender : {0}", ((Form)sender).Text);
