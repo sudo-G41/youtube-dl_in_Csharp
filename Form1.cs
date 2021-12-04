@@ -18,12 +18,14 @@ namespace youtube
     public partial class Form1 : Form
     {
         Boolean downloadOk = false;
+        Boolean downloadingFlag = false;
         public Form1()
         {
             InitializeComponent();
 
             urlTextBox.TextChanged += urlTextBoxTextChanged;
             downloadpathBtn.Click += downloadpathBtnClick;
+            downloadBtn.Click += downloadBtnClick;
         }
         private void urlTextBoxTextChanged(object sender, EventArgs e){
             if(urlTextBox.Text.Length>16){
@@ -61,12 +63,52 @@ namespace youtube
         }
 
         private void downloadBtnClick(object sender, EventArgs e){
+            Console.WriteLine("download Click");
+            if(downloadingFlag){
+                System.Windows.Forms.MessageBox.Show("잠시만 기다려 주세요.");
+                return;
+            }
             if(downloadOk&&downloadpathTextBox.Text.Length>0){
+                this.thumbnailPictureBox.Image=null;
                 String option = "-o \""+downloadpathTextBox.Text+"\\%(title)s.%(ext)s\" "+urlTextBox.Text+" -v";
-                var sample = Process.Start(Application.StartupPath+"/yt-dlp.exe",option);
-                while(!sample.HasExited);
+                Process yt = new Process();
+                yt.StartInfo.FileName=Application.StartupPath+"/yt-dlp.exe";
+                yt.StartInfo.Arguments=option;
+                yt.StartInfo.CreateNoWindow=true;
+                yt.StartInfo.WindowStyle=ProcessWindowStyle.Hidden;
+                yt.Start();
+                // var sample = Process.Start(Application.StartupPath+"/yt-dlp.exe",option);
+                this.donwloading.Font=new Font(this.donwloading.Font.Name,30);
+                this.donwloading.Visible=true;
+                this.thumbnailPictureBox.Visible=false;
+                downloadingFlag=true;
+                // while(!sample.HasExited){
+                while(!yt.HasExited){
+                    switch(this.donwloading.Text){
+                        case "Downloading":
+                        Delay(1000);
+                        this.donwloading.Text="Downloading.";
+                        break;
+                        case "Downloading.":
+                        Delay(1000);
+                        this.donwloading.Text="Downloading..";
+                        break;
+                        case "Downloading..":
+                        Delay(1000);
+                        this.donwloading.Text="Downloading...";
+                        break;
+                        case "Downloading...":
+                        Delay(1000);
+                        this.donwloading.Text="Downloading";
+                        break;
+                    }
+                }
                 downloadOk=false;
+                downloadingFlag=false;
                 urlTextBox.Text="";
+                this.donwloading.Visible=false;
+                this.thumbnailPictureBox.Visible=true;
+                MessageBox.Show("저장완료");
             }
             else if(downloadOk){
                 MessageBox.Show("저장할 위치를 선택해 주세요");
@@ -89,6 +131,22 @@ namespace youtube
             Console.WriteLine("X : {0}, Y : {1}", e.X, e.Y);
             Console.WriteLine("Button : {0}, Clicks : {1}", e.Button, e.Clicks);
             Console.WriteLine();
+            Console.WriteLine(this.donwloading.Font.Size.ToString());
         }
+        private static DateTime Delay(int MS)
+        {
+            DateTime ThisMoment = DateTime.Now;
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0, MS);
+            DateTime AfterWards = ThisMoment.Add(duration);
+            
+            while (AfterWards >= ThisMoment)
+            {
+                System.Windows.Forms.Application.DoEvents();
+                ThisMoment = DateTime.Now;
+            }
+            
+            return DateTime.Now;
+        }
+
     }
 }

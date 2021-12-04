@@ -69,8 +69,13 @@ namespace youtube
             thumbnailPictureBox.Location=new System.Drawing.Point(45,125);
             thumbnailPictureBox.Size=new System.Drawing.Size(486,360);
 
-            // this.Controls.Add(btn1);
-            // this.Controls.Add(btn2);
+            donwloading = new Label();
+            donwloading.Visible=false;
+            donwloading.Location=new System.Drawing.Point(45,85);
+            donwloading.Size=new System.Drawing.Size(485,360);
+            donwloading.AutoSize=false;
+            donwloading.TextAlign=System.Drawing.ContentAlignment.MiddleCenter;
+            donwloading.Text="Downloading";
 
             this.Controls.Add(downloadpathLabel);
             this.Controls.Add(downloadpathTextBox);
@@ -79,6 +84,7 @@ namespace youtube
             this.Controls.Add(urlTextBox);
             this.Controls.Add(downloadBtn);
             this.Controls.Add(thumbnailPictureBox);
+            this.Controls.Add(donwloading);
 
             this.MouseDown += new MouseEventHandler(MousePointXY);
         }
@@ -92,6 +98,7 @@ namespace youtube
         private TextBox urlTextBox;
         private Button downloadBtn;
         private PictureBox thumbnailPictureBox;
+        private Label donwloading;
         #endregion
     }
 }
