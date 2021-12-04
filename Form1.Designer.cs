@@ -33,11 +33,76 @@ namespace youtube
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);//창 사이즈 조절
-            this.Text = "Form1";
+            this.Text = "Youtube Downloader";
             this.FormBorderStyle=FormBorderStyle.FixedSingle;//창 사이즈 고정
+
+            // btn1 = new Button();
+            // btn1.Name = "btn1";
+            // btn1.Text = "???";
+            // btn1.Location = new System.Drawing.Point(100, 20);
+            // btn1.Size = new System.Drawing.Size(200,30);
+            
+            // btn2 = new Button();
+            // btn2.Name = "btn2";
+            // btn2.Text = "File";
+            // btn2.Location = new System.Drawing.Point(100, 70);
+            // btn2.Size = new System.Drawing.Size(200,30);
+            
+            downloadpathLabel=new Label();
+            downloadpathLabel.Text="경로";
+            downloadpathLabel.Location = new System.Drawing.Point(40,20);
+            downloadpathLabel.Size = new System.Drawing.Size(45, 30);
+
+            downloadpathTextBox=new TextBox();
+            downloadpathTextBox.Location=new System.Drawing.Point(85,20);
+            downloadpathTextBox.Size=new System.Drawing.Size(620-85,30);
+
+            downloadpathBtn=new Button();
+            downloadpathBtn.Text="찾기";
+            downloadpathBtn.Location=new System.Drawing.Point(650,20);
+            downloadpathBtn.Size=new System.Drawing.Size(90,30);
+
+            urlLabel = new Label();
+            urlLabel.Text = "주소";
+            urlLabel.Location = new System.Drawing.Point(40,70);
+            urlLabel.Size = new System.Drawing.Size(45, 30);
+
+            urlTextBox = new TextBox();
+            urlTextBox.Location=new System.Drawing.Point(85,70);
+            urlTextBox.Size=new System.Drawing.Size(620-85,30);
+
+            downloadBtn=new Button();
+            downloadBtn.Text="Download";
+            downloadBtn.Location=new System.Drawing.Point(650,70);
+            downloadBtn.Size=new System.Drawing.Size(90,30);
+
+            thumbnailPictureBox=new PictureBox();
+            thumbnailPictureBox.Location=new System.Drawing.Point(45,125);
+            thumbnailPictureBox.Size=new System.Drawing.Size(486,360);
+
+            // this.Controls.Add(btn1);
+            // this.Controls.Add(btn2);
+
+            this.Controls.Add(downloadpathLabel);
+            this.Controls.Add(downloadpathTextBox);
+            this.Controls.Add(downloadpathBtn);
+            this.Controls.Add(urlLabel);
+            this.Controls.Add(urlTextBox);
+            this.Controls.Add(downloadBtn);
+            this.Controls.Add(thumbnailPictureBox);
 
             this.MouseDown += new MouseEventHandler(MousePointXY);
         }
+
+        // private Button btn1;
+        // private Button btn2;
+        private Label downloadpathLabel;
+        private TextBox downloadpathTextBox;
+        private Button downloadpathBtn;
+        private Label urlLabel;
+        private TextBox urlTextBox;
+        private Button downloadBtn;
+        private PictureBox thumbnailPictureBox;
         #endregion
     }
 }
