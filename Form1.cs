@@ -17,6 +17,7 @@ namespace youtube
 {
     public partial class Form1 : Form
     {
+        Boolean downloadOk = false;
         public Form1()
         {
             InitializeComponent();
@@ -27,9 +28,6 @@ namespace youtube
         private void urlTextBoxTextChanged(object sender, EventArgs e){
             if(urlTextBox.Text.Length>16){
                 String[] strArray = urlTextBox.Text.Split('/');
-                // for(int i=0;i<strArray.Length;i++){
-                //     Console.WriteLine(strArray[i]);
-                // }
                 if(strArray.Length!=4){
                     return;
                 }
@@ -56,8 +54,25 @@ namespace youtube
                 }
                 using(MemoryStream mes = new MemoryStream(img)){
                     Image i = Image.FromStream(mes);
+                    downloadOk=true;
                     return i;
                 }
+            }
+        }
+
+        private void downloadBtnClick(object sender, EventArgs e){
+            if(downloadOk&&downloadpathTextBox.Text.Length>0){
+                String option = "-o \""+downloadpathTextBox.Text+"\\%(title)s.%(ext)s\" "+urlTextBox.Text+" -v";
+                var sample = Process.Start(Application.StartupPath+"/yt-dlp.exe",option);
+                while(!sample.HasExited);
+                downloadOk=false;
+                urlTextBox.Text="";
+            }
+            else if(downloadOk){
+                MessageBox.Show("저장할 위치를 선택해 주세요");
+            }
+            else{
+                MessageBox.Show("Youtube 주소를 입력해 주세요");
             }
         }
 

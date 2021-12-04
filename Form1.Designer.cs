@@ -44,6 +44,7 @@ namespace youtube
             downloadpathTextBox=new TextBox();
             downloadpathTextBox.Location=new System.Drawing.Point(85,20);
             downloadpathTextBox.Size=new System.Drawing.Size(620-85,30);
+            downloadpathTextBox.ReadOnly=true;
 
             downloadpathBtn=new Button();
             downloadpathBtn.Text="찾기";
