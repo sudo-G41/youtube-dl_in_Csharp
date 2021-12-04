@@ -22,6 +22,7 @@ namespace youtube
             InitializeComponent();
 
             urlTextBox.TextChanged += urlTextBoxTextChanged;
+            downloadpathBtn.Click += downloadpathBtnClick;
             // btn1.Click += btn1Click;
             // btn2.Click += btn2Click;
         }
@@ -88,6 +89,14 @@ namespace youtube
             }
         }
         // private void thumbnailPictureBoxImage()
+
+        private void downloadpathBtnClick(object sender, EventArgs e){
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;//폴더선택 가능 여부
+            if(dialog.ShowDialog()==CommonFileDialogResult.Ok){
+                downloadpathTextBox.Text=dialog.FileName+"\\download";
+            }
+        }
 
         private void MousePointXY(object sender, MouseEventArgs e){
             Console.WriteLine("Sender : {0}", ((Form)sender).Text);
