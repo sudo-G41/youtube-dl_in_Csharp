@@ -23,35 +23,7 @@ namespace youtube
 
             urlTextBox.TextChanged += urlTextBoxTextChanged;
             downloadpathBtn.Click += downloadpathBtnClick;
-            // btn1.Click += btn1Click;
-            // btn2.Click += btn2Click;
         }
-
-        // private void btn1Click(object sender, EventArgs e){
-        //     if(btn1.Text.Length<3){
-        //         btn1.Text+="?";
-        //     }
-        //     else{
-        //         btn1.Text = "";
-        //     }
-        //     Console.WriteLine(btn1.Text);
-        // }
-
-        // private void btn2Click(object sender, EventArgs e){//폴더 선택 이벤트
-        //     CommonOpenFileDialog d = new CommonOpenFileDialog();
-        //     d.IsFolderPicker = true;
-        //     if(d.ShowDialog()==CommonFileDialogResult.Ok){
-        //         btn1.Text = d.FileName;
-        //         Console.WriteLine(btn1.Text);
-        //         String option = "-o "+d.FileName+"\"\\download\\%(title)s.%(ext)s\" https://www.youtube.com/watch?v=1vryJp_ylVQ -v";
-        //         var sample = Process.Start(Application.StartupPath+"/yt-dlp.exe",option);
-        //         Console.WriteLine(option);
-        //     }
-        // }
-        // private void thumbnailBtnClick(object sender, EventArgs e){
-        //     String URL = "https://img.youtube.com/vi/1bNNQBDeCtY/0.jpg";
-        //     this.thumbnailPicbox.Image = getImageURL(URL);
-        // }
         private void urlTextBoxTextChanged(object sender, EventArgs e){
             if(urlTextBox.Text.Length>16){
                 String[] strArray = urlTextBox.Text.Split('/');
@@ -88,7 +60,6 @@ namespace youtube
                 }
             }
         }
-        // private void thumbnailPictureBoxImage()
 
         private void downloadpathBtnClick(object sender, EventArgs e){
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
