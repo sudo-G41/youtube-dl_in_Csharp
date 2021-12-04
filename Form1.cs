@@ -103,6 +103,7 @@ namespace youtube
                         break;
                     }
                 }
+                
                 downloadOk=false;
                 downloadingFlag=false;
                 urlTextBox.Text="";
